@@ -18,10 +18,12 @@ class ClassifiedQuery
 
         if ($request->get('price') === 'desc') {
             $query->orderBy('price', 'desc');
-        } else {
+        } else if ($request->get('price') === 'asc') {
             $query->orderBy('price');
         }
 
-        return $query->orderBy('created_at', 'desc')->get();
+        $query->orderBy('created_at', 'desc');
+
+        return $query->get();
     }
 }
