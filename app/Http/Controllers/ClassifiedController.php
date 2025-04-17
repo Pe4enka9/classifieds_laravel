@@ -24,9 +24,9 @@ class ClassifiedController extends Controller
     }
 
     // Вывод объявлений пользователя
-    public function userClassifieds(Request $request): JsonResponse
+    public function userClassifieds(Request $request, ClassifiedQuery $classifiedQuery): JsonResponse
     {
-        $classifieds = Classified::where('user_id', $request->user()->id)->get();
+        $classifieds = $classifiedQuery->sort($request)->where('user_id', $request->user()->id);
 
         return response()->json(ClassifiedResource::collection($classifieds));
     }
