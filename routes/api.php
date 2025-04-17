@@ -15,7 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user/classifieds', [ClassifiedController::class, 'userClassifieds']);
 
-    Route::post('/classifieds', [ClassifiedController::class, 'create']);
+    Route::post('/classifieds', [ClassifiedController::class, 'store']);
     Route::patch('/classifieds/{classified}', [ClassifiedController::class, 'update']);
     Route::delete('/classifieds/{classified}', [ClassifiedController::class, 'destroy']);
 });

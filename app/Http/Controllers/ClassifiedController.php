@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClassifiedCreate;
 use App\Http\Queries\ClassifiedQuery;
 use App\Http\Requests\ClassifiedRequest;
 use App\Http\Requests\ClassifiedUpdateRequest;
@@ -37,7 +38,7 @@ class ClassifiedController extends Controller
     }
 
     // Создание
-    public function create(ClassifiedRequest $request): JsonResponse
+    public function store(ClassifiedRequest $request): JsonResponse
     {
         $imagePath = $request->file('image')->store('classifieds', 'public');
         $imageFullPath = Storage::disk('public')->url($imagePath);
@@ -49,6 +50,8 @@ class ClassifiedController extends Controller
             'price' => $request->input('price'),
             'image_url' => $imageFullPath,
         ]);
+
+        ClassifiedCreate::dispatch($classified);
 
         return response()->json(new ClassifiedResource($classified), 201);
     }
